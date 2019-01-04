@@ -241,7 +241,7 @@ ame --control interested_three_prime_UTR.control  \
   --oc UTR_output interested_three_prime_UTR.fa \
   Homo_sapiens.meme Ray2013_rbp_Homo_sapiens.meme UTR_de_novo/meme.txt
 ```
-* plus de novo motif file by meme
+> plus de novo motif file by meme
 ```bash
 ame --control interested_promoter.control \
   --oc promoter_output interested_promoter.fa \
