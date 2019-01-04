@@ -141,7 +141,7 @@ bedtools getfasta -s -name -fi GRCh38.p10.genome.fa \
 ```
 
 ### concatenate sequences of the same promoter
-For the purpose of concat transcript seq with same promoter ,we should change the columns order of the bed file **(with the 4rd column is transcript name)**.
+> For the purpose of concat transcript seq with same promoter ,we should change the columns order of the bed file **(with the 4rd column is transcript name)**.
 ```{r,eval=FALSE}
 concatenate_seq <- function(fasta_file) {
     biozhuoer::read_fasta(fasta_file) %>% 
@@ -169,7 +169,7 @@ fasta-shuffle-letters interested_promoter.fa interested_promoter.control
 ```
 
 #### downstream 1000bp as bg 
-* https://dongzhuoer.github.io/diff_exp_2018_zhuoer/motif.html 
+> https://dongzhuoer.github.io/diff_exp_2018_zhuoer/motif.html 
 ```r
 slide <- function(input_bed, output_bed, n = 1000) {
     col_names <- c('chr', 'start', 'end', 'name', 'score', 'strand');
@@ -229,13 +229,13 @@ meme -dna -maxsize 1000000 \
   <img src="images/sequence_meme.png" width="500" height="300"/>
 </div>
 
-you can see the example html output [all_results](images/meme_example.html)
+> you can see the example html output [all_results](images/meme_example.html)
 
 ### motif enrichment with ame
 * **plus de novo motif file by meme**
 * **do not need to convert**
 
-* plus de novo motif file by meme
+> plus de novo motif file by meme
 ```bash
 ame --control interested_three_prime_UTR.control  \
   --oc UTR_output interested_three_prime_UTR.fa \
@@ -255,4 +255,4 @@ ame --control interested_promoter.control \
 <img src="images/sequence_ame.png" width="500" height="200"/>
 </div>
 
-you can see the example html output [all_results](images/ame_example.html)
+> you can see the example html output [all_results](images/ame_example.html)
