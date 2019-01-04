@@ -189,10 +189,10 @@ slide('interested_promoter.bed', 'interested_promoter_downstream.bed')
 #### bedtools shuffle
 ```bash
 bedtools shuffle -i interested_three_prime_UTR.bed \
--g GRCh38.p10.genome.size >interested_three_prime_UTR_btools.bed
+  -g GRCh38.p10.genome.size >interested_three_prime_UTR_btools.bed
 
 bedtools shuffle -i interested_promoter.bed \
--g GRCh38.p10.genome.size >interested_promoter_btools.bed
+  -g GRCh38.p10.genome.size >interested_promoter_btools.bed
 ```
 **repeat  get promoter and get 3'UTR section**
 
@@ -211,10 +211,10 @@ meme -dna -minw 4 -minw 12 -oc UTR_de_novo -mod zoops -nmotifs 5 interested_thre
 #meme -dna -oc /BioII/lulab_b/songyabing/motif_analysis/motif_db/promoter_de_novo -mod zoops -nmotifs 30 /BioII/lulab_b/songyabing/motif_analysis/data/interested_promoter.fa
 
 meme -dna -maxsize 1000000 \
--minw 4 -minw 12 \
--oc promoter_de_novo \
--mod zoops -nmotifs 5 \
-interested_promoter.fa
+  -minw 4 -minw 12 \
+  -oc promoter_de_novo \
+  -mod zoops -nmotifs 5 \
+  interested_promoter.fa
 ```
 ### motif enrichment with ame
 * **plus de novo motif file by meme**
@@ -223,12 +223,14 @@ interested_promoter.fa
 * plus de novo motif file by meme
 ```bash
 ame --control interested_three_prime_UTR.control  \
---oc UTR_output interested_three_prime_UTR.fa \
-Homo_sapiens.meme Ray2013_rbp_Homo_sapiens.meme UTR_de_novo/meme.txt
+  --oc UTR_output interested_three_prime_UTR.fa \
+  Homo_sapiens.meme Ray2013_rbp_Homo_sapiens.meme UTR_de_novo/meme.txt
 ```
 * plus de novo motif file by meme
 ```bash
 ame --control interested_promoter.control \
---oc promoter_output interested_promoter.fa \
-JASPAR2018_CORE_vertebrates_non-redundant.meme Homo_sapiens.meme HOCOMOCOv11_core_HUMAN_mono_meme_format.meme promoter_de_novo/meme.txt
+  --oc promoter_output interested_promoter.fa \
+  JASPAR2018_CORE_vertebrates_non-redundant.meme Homo_sapiens.meme、
+  HOCOMOCOv11_core_HUMAN_mono_meme_format.meme 、
+  promoter_de_novo/meme.txt
 ```
