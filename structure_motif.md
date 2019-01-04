@@ -141,7 +141,7 @@ bedtools getfasta -s -name -fi GRCh38.p10.genome.fa \
 ```
 
 ### concatenate sequences of the same promoter
-For the purpose of concat transcript seq with same promoter ,we should change the columns order of the bed file **(with the 4rd column is transcript name)**.
+> For the purpose of concat transcript seq with same promoter ,we should change the columns order of the bed file **(with the 4rd column is transcript name)**.
 ```{r,eval=FALSE}
 concatenate_seq <- function(fasta_file) {
     biozhuoer::read_fasta(fasta_file) %>% 
@@ -153,7 +153,7 @@ concatenate_seq('interested_promoter.fa')
 ```
 
 ## get structural motif with Graphprot
-GraphProt supports input sequences in fasta format. The viewpoint mechanism sets viewpoints to all nucleotides in uppercase letters, nucleotides in **lowercase letters are only used for RNA structure predictions**.
+> GraphProt supports input sequences in fasta format. The viewpoint mechanism sets viewpoints to all nucleotides in uppercase letters, nucleotides in **lowercase letters are only used for RNA structure predictions**.
 
 ### get lowercase letters
 ```bash
@@ -168,7 +168,7 @@ awk '{if ($1~/^>/) {print;} else {print tolower($1)}}' interested_promoter.contr
 ### run structural motif with graphprot
 **graphprot input sequence will shorter than 300bp**
 
-* In paper ,it says "This way we still allow accurate folding of the mRNA, by considering 150 nucleotides upstream and downstream of the viewpoint."
+> In paper ,it says "This way we still allow accurate folding of the mRNA, by considering 150 nucleotides upstream and downstream of the viewpoint."
 
 #### get optimized parameters
 ```bash
@@ -200,8 +200,8 @@ GraphProt.pl \
 ```
 
 ## get structural motif with RNApromo
-* In website, it says "The tool is limited to uploading 5000bp sequences (25000bp is the maximum length of allowed uploaded structures, there are no restrictions on negative sequences)"
-* https://genie.weizmann.ac.il/pubs/rnamotifs08/rnamotifs08_predict.html
+> In website, it says "The tool is limited to uploading 5000bp sequences (25000bp is the maximum length of allowed uploaded structures, there are no restrictions on negative sequences)"
+> https://genie.weizmann.ac.il/pubs/rnamotifs08/rnamotifs08_predict.html
 * -min <num>  Minimal motif size (default = 15).
 * -max <num>  Maximal motif size (default = 70).
 * -bg <num>   Ignore motifs with p-value > <num> (Default = 0.01). The p-value is calculated for the number of times the motif appears in the input set, using the given BG model.
@@ -216,8 +216,8 @@ GraphProt.pl \
 
 ## get structural motif with BEAM
 ### get corresponding RNA sequence
-* It needs RNA sequence, we could replace it here or use following --noconv para
-* https://github.com/noise42/beam
+> It needs RNA sequence, we could replace it here or use following --noconv para  
+> website: https://github.com/noise42/beam
 
 #### get promoter corresponding RNA sequence 
 ```bash
@@ -233,7 +233,7 @@ awk '{if ($1~/^>/) print;else {gsub(/T/,"U",$1);print;}}' interested_three_prime
 ```
 ### get fastB format
 #### use RNAfold to get dot-bracket
-* RNAfold tutorial:https://www.tbi.univie.ac.at/RNA/tutorial/
+> RNAfold tutorial:https://www.tbi.univie.ac.at/RNA/tutorial/
 * --noconv：Do not automatically substitute nucleotide "T" with "U" (default=off) , we can input DNA seq
 
 Compute the best (MFE) structure for this sequence (primary sequence with dot-bracket)
@@ -261,7 +261,7 @@ java -jar BEAM_release1.6.1.jar -f BEAMready.fa -g bg.fa -w 10 -W 40 -M 3
 pip install weblogo
 ```
 #### plot with suggested command
-* we should not only specify **-o** option with format suffix, we should also specify **-F** with format
+> we should not only specify **-o** option with format suffix, we should also specify **-F** with format
 ```bash
 # -o:Output file (default: stdout)
 # -F:Format of output: eps (default), png, png_print, pdf, jpeg, svg, logodata
@@ -295,7 +295,7 @@ weblogo -a 'ZAQXSWCDEVFRBGTNHY' -f BEAMready_m1_run1_wl.fa -D fasta \
 ./M_RNAplfold -W 240 -L 160 -u 1 <interested_promoter.fa >M_profile.txt
 ```
 ### combine the four annotation files 
-* python version 2.x,otherwise bug:‘float’ object cannot be interpreted as an integer
+> python version 2.x,otherwise bug:‘float’ object cannot be interpreted as an integer
 ```python
 python combine_letter_profiles.py E_profile.txt H_profile.txt I_profile.txt M_profile.txt 1 combined_profile.txt 
 ```
