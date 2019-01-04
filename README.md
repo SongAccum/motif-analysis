@@ -1,6 +1,8 @@
 # sequence motif analysis
 This is a document for motif related analysis.
 
+##workflow
+
 <div align = center>
 <img src="images/sequence_motif_pipe.png" width="800" height="400" />
 </div>
@@ -221,6 +223,7 @@ meme -dna -maxsize 1000000 \
   -mod zoops -nmotifs 5 \
   interested_promoter.fa
 ```
+#### example meme output
 
 <div align = center>
   <img src="images/sequence_meme.png" width="500" height="300"/>
@@ -246,6 +249,7 @@ ame --control interested_promoter.control \
   HOCOMOCOv11_core_HUMAN_mono_meme_format.meme 、
   promoter_de_novo/meme.txt
 ```
+#### example meme output
 
 <div align = center>
 <img src="images/sequence_ame.png" width="500" height="200"/>
