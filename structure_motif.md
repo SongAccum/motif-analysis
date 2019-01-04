@@ -275,7 +275,7 @@ weblogo -a 'ZAQXSWCDEVFRBGTNHY' -f BEAMready_m1_run1_wl.fa -D fasta \
 #### example output
 
 <div align = center>
-  <img src="images/structure_out_2.jpeg" width="500" height="200"/>
+  <img src="images/structure_out_2.jpeg" width="500" height="100"/>
 </div>
 
 
