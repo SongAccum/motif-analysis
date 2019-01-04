@@ -1,9 +1,9 @@
 # sequence motif analysis
 This is a document for motif related analysis.
 
-<center>
+<div align = center>
 <img src="images/sequence_motif_pipe.png" width="800" height="400" />
-</center>
+</div>
 
 ## get 3'-UTR and promoter sequence
 ### install R package GenomicFeatures and biozhuoer tools
