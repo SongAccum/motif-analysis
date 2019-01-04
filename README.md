@@ -1,5 +1,10 @@
-# motif analysis
+# sequence motif analysis
 This is a document for motif related analysis.
+
+<center>
+<img src="images/sequence_motif_pipe.png" width="800" height="400" />
+</center>
+
 ## get 3'-UTR and promoter sequence
 ### install R package GenomicFeatures and biozhuoer tools
 * **GenomicFeatures** package used to extract needed sequence
@@ -216,6 +221,13 @@ meme -dna -maxsize 1000000 \
   -mod zoops -nmotifs 5 \
   interested_promoter.fa
 ```
+
+<center>
+<img src="images/sequence_meme.png" width="500" height="300"/>
+</center>
+
+you can see the example html output [all_results](images/meme_example.html)
+
 ### motif enrichment with ame
 * **plus de novo motif file by meme**
 * **do not need to convert**
@@ -234,3 +246,9 @@ ame --control interested_promoter.control \
   HOCOMOCOv11_core_HUMAN_mono_meme_format.meme 、
   promoter_de_novo/meme.txt
 ```
+
+<center>
+<img src="images/sequence_ame.png" width="400" height="300"/>
+</center>
+
+you can see the example html output [all_results](images/ame_example.html)
