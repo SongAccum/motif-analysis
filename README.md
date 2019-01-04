@@ -223,7 +223,7 @@ meme -dna -maxsize 1000000 \
 ```
 
 <div align = center>
-![meme_example](images/sequence_meme.png){:height="300" width="500"}
+  <img src="images/sequence_meme.png" width="500" height="300"/>
 </div>
 
 you can see the example html output [all_results](images/meme_example.html)
@@ -247,8 +247,8 @@ ame --control interested_promoter.control \
   promoter_de_novo/meme.txt
 ```
 
-<center>
+<div align = center>
 <img src="images/sequence_ame.png" width="500" height="200"/>
-</center>
+</div>
 
 you can see the example html output [all_results](images/ame_example.html)
