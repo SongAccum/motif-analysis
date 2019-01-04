@@ -2,7 +2,7 @@
 This is a document for motif related analysis.
 
 <div align = center>
-<img src="images/sequence_motif_pipe.png" width="800" height="400" />
+  ![test image size](images/sequence_motif_pipe.png){:height="400px" width="800px"}
 </div>
 
 ## get 3'-UTR and promoter sequence
