@@ -7,8 +7,8 @@ This is a document for motif related analysis.
 <img src="images/sequence_motif_pipe.png" width="800" height="400" />
 </div>
 
-## get 3'-UTR and promoter sequence
-### install R package GenomicFeatures and biozhuoer tools
+## 1 get 3'-UTR and promoter sequence
+### 1.1 install R package GenomicFeatures and biozhuoer tools
 * **GenomicFeatures** package used to extract needed sequence
 * **biozhuoer** tools used to concat sequences of the same 3’ UTR or promoter
 ```r
@@ -19,7 +19,7 @@ library(GenomicFeatures)
 if (!('devtools' %in% .packages(T))) install.packages('devtools');
 devtools::install_github('dongzhuoer/biozhuoer');
 ```
-### generate txdb object
+### 1.2 generate txdb object
 There are many functions for us to get genme annotation file:
 * makeTxDbFromBiomart  
 * makeTxDbFromEnsembl  
@@ -31,7 +31,7 @@ Here we use makeTxDbFromGFF for the existing of gtf file.
 gtf_file="/BioII/lulab_b/songyabing/genome/gencode.v27.annotation.gtf"
 txdb <- makeTxDbFromGFF(gtf_file, format="gtf")
 ```
-### get 3'UTR & 5'UTR site range
+### 1.3 get 3'UTR & 5'UTR site range
 ```r
 utr5p = fiveUTRsByTranscript(txdb, use.names=T)
 utr3p = threeUTRsByTranscript(txdb, use.names=T)
@@ -42,15 +42,15 @@ utr5p.df=as.data.frame(utr5p)
 write.table(utr3p.df, "utr3p.info", row.names=FALSE, sep='\t',quote=FALSE )
 write.table(utr5p.df, "utr5p.info", row.names=FALSE, sep='\t' ,quote=FALSE)
 ```
-### get promoter site range
+### 1.4 get promoter site range
 ```r
 promoter=promoters(txdb)
 promoter.df=as.data.frame(promoter)
 write.table(promoter.df, "promoter.info", row.names=FALSE, sep='\t' ,quote=FALSE)
 ```
-## intersect with diff_expr_gene
+## 2 intersect with diff_expr_gene
 intersect with diff_exp_genes & get interested genes' info      
-### interested 3'UTR
+### 2.1 interested 3'UTR
 * 1st column:chr
 * 2nd column:gene
 * 3rd column:transprict
@@ -68,7 +68,7 @@ sort -t $'\t' -k 2 utr3p.info|join -o 1.3 2.1 1.2 1.9 1.4 1.5 1.6 1.7 1.8 1.10 -
   |uniq|sed -e 's/gene_id "//' -e 's/"; transcript_id "/\t/' -e 's/";//'))|sort -t $'\t' -k 2  ) |\
   sort -t $'\t' -k 1 >interested_three_prime_UTR.info
 ```
-### interested promoter
+### 2.2 interested promoter
 * 1st column:chr
 * 2nd column:gene
 * 3rd column:transprict_name
@@ -84,8 +84,8 @@ sort -t $'\t' -k 7 promoter.info|join -o 1.1 2.1 1.7 1.2  1.3 1.4 1.5 1.6 -t $'\
   |uniq|sed -e 's/gene_id "//' -e 's/"; transcript_id "/\t/' -e 's/";//' ))|sort -t $'\t' -k 2  ) |\
   sort -t $'\t' -k 1 >interested_promoter.info
 ```
-## convert to BED format
-### 3'UTR bed info 
+## 3 convert to BED format
+### 3.1 3'UTR bed info 
 * 1st column:chr
 * 2nd column:start
 * 3rd column:end
@@ -99,7 +99,7 @@ cat interested_three_prime_UTR.info | \
   awk '{print $1 "\t" $5-1 "\t" $6 "\t" $3 "\t" $2 "\t" $8}' | \
   sort -u  > interested_three_prime_UTR.bed
 ```
-### promoter bed info 
+### 3.2 promoter bed info 
 * 1st column:chr 
 * 2th column:start
 * 3th column:end
@@ -113,8 +113,8 @@ cat interested_promoter.info | \
   awk '{print $1 "\t" $4-1 "\t" $5 "\t" $3 "\t" $2 "\t" $7}' | \
   sort -u  > interested_promoter.bed
 ```
-## get genome sequence
-### get 3'UTR related genome sequence
+## 4 get genome sequence
+### 4.1 get 3'UTR related genome sequence
 * -s: Force strandedness. If the feature occupies the antisense strand, the sequence will be reverse complemented. 
 * -name:	Use the “name” column in the BED file for the FASTA headers in the output FASTA file.
 * -fi: input FASTA
@@ -123,7 +123,7 @@ cat interested_promoter.info | \
 bedtools getfasta -s -name -fi GRCh38.p10.genome.fa \
   -bed interested_three_prime_UTR.bed -fo interested_three_prime_UTR.fa
 ```
-### concatenate sequences of the same 3’ UTR
+### 4.2 concatenate sequences of the same 3’ UTR
 ```r
 concatenate_seq <- function(fasta_file) {
     biozhuoer::read_fasta(fasta_file) %>% 
@@ -134,13 +134,13 @@ concatenate_seq <- function(fasta_file) {
 concatenate_seq('interested_three_prime_UTR.fa')
 ```
 
-### get promoter related genome sequence
+### 4.3 get promoter related genome sequence
 ```bash
 bedtools getfasta -s -name -fi GRCh38.p10.genome.fa \
   -bed interested_promoter.bed -fo interested_promoter.fa
 ```
 
-### concatenate sequences of the same promoter
+### 4.4 concatenate sequences of the same promoter
 > For the purpose of concat transcript seq with same promoter ,we should change the columns order of the bed file **(with the 4rd column is transcript name)**.
 ```{r,eval=FALSE}
 concatenate_seq <- function(fasta_file) {
@@ -152,23 +152,23 @@ concatenate_seq <- function(fasta_file) {
 concatenate_seq('interested_promoter.fa')
 ```
 
-## motif enrichment with ame in meme suite
+## 5 motif enrichment with ame in meme suite
 
-### generate random sequence
+### 5.1 generate random sequence
 there are three mothods to get random sequence: 
 
 * shuffle the input sequence 
 * downsteam 1000bp  
 * bedtools shuffle
 
-#### shuffle the input sequence
+#### 5.1.1 shuffle the input sequence
 ```bash
 fasta-shuffle-letters interested_three_prime_UTR.fa interested_three_prime_UTR.control
 
 fasta-shuffle-letters interested_promoter.fa interested_promoter.control
 ```
 
-#### downstream 1000bp as bg 
+#### 5.1.2 downstream 1000bp as bg 
 > https://dongzhuoer.github.io/diff_exp_2018_zhuoer/motif.html 
 ```r
 slide <- function(input_bed, output_bed, n = 1000) {
@@ -193,7 +193,7 @@ slide('interested_promoter.bed', 'interested_promoter_downstream.bed')
 ```
 **repeat  get promoter and get 3'UTR section**
 
-#### bedtools shuffle
+#### 5.1.3 bedtools shuffle
 ```bash
 bedtools shuffle -i interested_three_prime_UTR.bed \
   -g GRCh38.p10.genome.size >interested_three_prime_UTR_btools.bed
@@ -203,7 +203,7 @@ bedtools shuffle -i interested_promoter.bed \
 ```
 **repeat  get promoter and get 3'UTR section**
 
-### get de novo motif
+### 5.2 get de novo motif
 * -nmotifs: the number of motifs to be reported, default value is one, remember to change
 * -evt: MEME will stop searching for motifs if the last motif found has an E-value > ev.
 * -minw： Search for motifs with a width ≥ minw. default:8
@@ -223,7 +223,7 @@ meme -dna -maxsize 1000000 \
   -mod zoops -nmotifs 5 \
   interested_promoter.fa
 ```
-#### example meme output
+#### 5.2.1 example meme output
 
 <div align = center>
   <img src="images/sequence_meme.png" width="500" height="300"/>
@@ -231,7 +231,7 @@ meme -dna -maxsize 1000000 \
 
 > you can see the example html output [all_results](images/meme_example.html)
 
-### motif enrichment with ame
+### 5.3 motif enrichment with ame
 * **plus de novo motif file by meme**
 * **do not need to convert**
 
@@ -249,7 +249,7 @@ ame --control interested_promoter.control \
   HOCOMOCOv11_core_HUMAN_mono_meme_format.meme 、
   promoter_de_novo/meme.txt
 ```
-#### example meme output
+#### 5.3.1 example meme output
 
 <div align = center>
 <img src="images/sequence_ame.png" width="500" height="200"/>
