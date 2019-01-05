@@ -152,23 +152,21 @@ concatenate_seq <- function(fasta_file) {
 concatenate_seq('interested_promoter.fa')
 ```
 
-## 5 motif enrichment with ame in meme suite
-
-### 5.1 generate random sequence
+## 5 generate random sequence as bg sequence
 there are three mothods to get random sequence: 
 
 * shuffle the input sequence 
 * downsteam 1000bp  
 * bedtools shuffle
 
-#### 5.1.1 shuffle the input sequence
+### 5.1 shuffle the input sequence
 ```bash
 fasta-shuffle-letters interested_three_prime_UTR.fa interested_three_prime_UTR.control
 
 fasta-shuffle-letters interested_promoter.fa interested_promoter.control
 ```
 
-#### 5.1.2 downstream 1000bp as bg 
+### 5.2 downstream 1000bp as bg 
 > https://dongzhuoer.github.io/diff_exp_2018_zhuoer/motif.html 
 ```r
 slide <- function(input_bed, output_bed, n = 1000) {
@@ -193,7 +191,7 @@ slide('interested_promoter.bed', 'interested_promoter_downstream.bed')
 ```
 **repeat  get promoter and get 3'UTR section**
 
-#### 5.1.3 bedtools shuffle
+### 5.3 bedtools shuffle
 ```bash
 bedtools shuffle -i interested_three_prime_UTR.bed \
   -g GRCh38.p10.genome.size >interested_three_prime_UTR_btools.bed
@@ -203,7 +201,9 @@ bedtools shuffle -i interested_promoter.bed \
 ```
 **repeat  get promoter and get 3'UTR section**
 
-### 5.2 get de novo motif
+## 6 motif enrichment with ame in meme suite
+
+### 6.2 get de novo motif
 * -nmotifs: the number of motifs to be reported, default value is one, remember to change
 * -evt: MEME will stop searching for motifs if the last motif found has an E-value > ev.
 * -minw： Search for motifs with a width ≥ minw. default:8
@@ -223,7 +223,7 @@ meme -dna -maxsize 1000000 \
   -mod zoops -nmotifs 5 \
   interested_promoter.fa
 ```
-#### 5.2.1 example meme output
+#### 6.2.1 example meme output
 
 <div align = center>
   <img src="images/sequence_meme.png" width="500" height="300"/>
@@ -231,7 +231,7 @@ meme -dna -maxsize 1000000 \
 
 > you can see the example html output [all_results](images/meme_example.html)
 
-### 5.3 motif enrichment with ame
+### 6.3 motif enrichment with ame
 * **plus de novo motif file by meme**
 * **do not need to convert**
 
@@ -249,7 +249,7 @@ ame --control interested_promoter.control \
   HOCOMOCOv11_core_HUMAN_mono_meme_format.meme 、
   promoter_de_novo/meme.txt
 ```
-#### 5.3.1 example meme output
+#### 6.3.1 example meme output
 
 <div align = center>
 <img src="images/sequence_ame.png" width="500" height="200"/>
