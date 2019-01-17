@@ -1,5 +1,6 @@
 # structure motif analysis
-This is a document for structure motif analysis.
+This is a document for structure motif analysis.  
+**[pipeline needed scripts](./bin/)**
 
 ## workflow
 
