@@ -1,5 +1,6 @@
 # sequence motif analysis
-This is a document for motif related analysis.
+This is a document for motif related analysis.  
+**[pipeline needed scripts](./bin/)**
 
 ## workflow
 
