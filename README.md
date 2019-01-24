@@ -219,7 +219,7 @@ meme -dna -minw 4 -minw 12 -oc UTR_de_novo -mod zoops -nmotifs 5 interested_thre
 #meme -dna -oc /BioII/lulab_b/songyabing/motif_analysis/motif_db/promoter_de_novo -mod zoops -nmotifs 30 /BioII/lulab_b/songyabing/motif_analysis/data/interested_promoter.fa
 
 meme -dna -maxsize 1000000 \
-  -minw 4 -minw 12 \
+  -minw 4 -maxw 12 \
   -oc promoter_de_novo \
   -mod zoops -nmotifs 5 \
   interested_promoter.fa
